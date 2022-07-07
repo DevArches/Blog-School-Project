@@ -2,33 +2,30 @@
 
 require_once './includes/ini.inc.php';
 
-function averageRating($rating, $bnum){
-    $all = str_split($rating);
-    $sum = 0;
-    foreach ($all as $value) {
-        $sum += (int) $value;
-    }
-    $average = $sum / count($all);
-    round($average);
-    $num = 0;
-    $average = (int) $average;
-    for ($i = 0; $i < 5; $i++) {
-            if ($i < $average) {
-                $num = $i + 1;
-                echo '<a href="star.php?rating=' . $num . '&bnum=' . $bnum . '"><span class="fa fa-star checked" id="starA"></span></a>';
-            } else {
-                $num = $i + 1;
-                echo '<a href="star.php?rating=' . $num . '&bnum=' . $bnum . '"><span class="fa fa-star" id="starA"></span></a>';
-            }
-        }
-    echo " Ratings: " . count($all);
-}
+// function averageRating($rating, $bnum){
+//     $all = str_split($rating);
+//     $sum = 0;
+//     $stars = 5;
+//     foreach ($all as $value) {
+//         $sum += (int) $value;
+//     }
+//     $average = $sum / count($all);
+//     round($average);
+//     $num = 0;
+//     $average = (int) $average;
+//     for ($i = 0; $i < $stars; $i++) {
+//             if ($i < $average) {
+//                 $num = $i + 1;
+//                 echo '<a href="star.php?rating=' . $num . '&bnum=' . $bnum . '"><span class="fa fa-star checked" id="starA"></span></a>';
+//             } else {
+//                 $num = $i + 1;
+//                 echo '<a href="star.php?rating=' . $num . '&bnum=' . $bnum . '"><span class="fa fa-star" id="starA"></span></a>';
+//             }
+//         }
+//     echo " Ratings: " . count($all);
+// }
 
-$b = new BlogManagement();
-$b->isLoggedIn();
-if(isset($_SESSION['username'])){
-    $b->isAdmin($_SESSION['username']);
-};
+
 
 ?>
 
@@ -65,19 +62,20 @@ if(isset($_SESSION['username'])){
         <?php
         $blog = new BlogManagement();
         $blogs = $blog->getBlogs();
-        foreach ($blogs as $blog) { ?>
+        foreach ($blogs as $post) { ?>
             <div id="blog">
-                <h2><?php echo $blog->getSubject() ?></h2>
-                <p><?php echo $blog->getText() ?></p>
-                <p>Created: <?php echo $blog->getCreated() ?></p>
-                <p><?php averageRating($blog->getRating(), $blog->getBnum()) ?></p>
-                <?php if($admin == true){ ?>
-                    <a href="editBlog.php?bnum=<?php echo $blog->getBnum() ?>">Edit</a>
-                    <a href="deleteBlog.php?bnum=<?php echo $blog->getBnum() ?>">Delete</a>
-                </p>
+                <h2><?php echo $post->getSubject() ?></h2>
+                <p><?php echo $post->getText() ?></p>
+                <p>Created: <?php echo $post->getCreated() ?></p>
+                <p><?php $blog->averageRating($post->getRating(), $post->getBnum()) ?></p>
+                <?php if ($admin == true) { ?>
+                    <a href="editBlog.php?bnum=<?php echo $post->getBnum() ?>">Edit</a>
+                    <a href="deleteBlog.php?bnum=<?php echo $post->getBnum() ?>">Delete</a>
+                    </p>
                 <?php } ?>
             </div>
         <?php } ?>
     </div>
 </body>
+
 </html>

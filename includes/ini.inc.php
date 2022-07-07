@@ -15,3 +15,10 @@ function myAutoLoader($class)
     }
 }
 spl_autoload_register('myAutoLoader');
+
+
+$b = new BlogManagement();
+$b->isLoggedIn();
+if (isset($_SESSION['username'])) {
+    $b->isAdmin($_SESSION['username']);
+};
