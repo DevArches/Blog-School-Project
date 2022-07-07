@@ -64,6 +64,7 @@ class Blog{
 class BlogManagement{
     public $blogs = array();
     public $table = 'Blogs';
+    public $stmt = '';
 
 
     public function dbConnect(){

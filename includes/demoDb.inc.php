@@ -42,7 +42,6 @@ CREATE TABLE Users (
 	pwd VARCHAR(255),
 	PRIMARY KEY(user)
 );
-
 ';
 
 
