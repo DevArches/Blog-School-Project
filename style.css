@@ -1,0 +1,21 @@
+#blog {
+  background-color: #1e253b;
+  border-radius: 2%;
+}
+#main {
+  background-color: #161c2e;
+  border-radius: 2%;
+}
+h1,
+h2 {
+  margin: 5px;
+}
+p {
+  margin: 10px;
+}
+.checked {
+  color: orange;
+}
+#starA:hover {
+  color: grey;
+}
