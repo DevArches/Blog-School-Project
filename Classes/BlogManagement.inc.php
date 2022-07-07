@@ -65,6 +65,12 @@ class BlogManagement{
     public $blogs = array();
     public $table = 'Blogs';
     public $stmt = '';
+    public $db = '';
+    public $pdo = null;
+    public $loggedIn = false;
+    public $admin = false;
+    public $username = '';
+    public $password = '';
 
 
     public function dbConnect(){
