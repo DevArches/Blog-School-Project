@@ -19,3 +19,8 @@ p {
 #starA:hover {
   color: grey;
 }
+#comments {
+  background-color: black;
+  border-radius: 2%;
+  font-size: small;
+}

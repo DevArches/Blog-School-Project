@@ -9,12 +9,14 @@ class Blog{
     private $loggedIn = false;
 
 
+
     public function __construct($bnum, $subject = '', $text = '', $rating = '', $created = 0){
         $this->setBnum($bnum);
         $this->setSubject($subject);
         $this->setText($text);
         $this->setRating($rating);
         $this->setCreated($created);
+
     }
     public function getBnum(){
         return $this->bnum;
@@ -58,6 +60,9 @@ class Blog{
     public function setLoggedIn($loggedIn){
         $this->loggedIn = $loggedIn;
     }
+
+
+
 }
 
 
@@ -69,8 +74,6 @@ class BlogManagement{
     public $pdo = null;
     public $loggedIn = false;
     public $admin = false;
-    public $username = '';
-    public $password = '';
 
 
     public function dbConnect(){
@@ -126,21 +129,6 @@ class BlogManagement{
         $this->dbConnect();
         $sql = 'DELETE FROM ' . $this->table . ' WHERE bnum = :bnum';
         $this->stmt = $this->pdo->prepare($sql);
-        $this->stmt->bindParam(':bnum', $bnum);
-        $this->stmt->execute();
-    }
-    public function addRating($bnum, $rating){
-        $this->dbConnect();
-        $sql = 'SELECT rating FROM ' . $this->table . ' WHERE bnum = :bnum';
-        $this->stmt = $this->pdo->prepare($sql);
-        $this->stmt->bindParam(':bnum', $bnum);
-        $this->stmt->execute();
-        $result = $this->stmt->fetch(PDO::FETCH_OBJ);
-        $currentRating = $result->rating;
-        $newRating = $currentRating .= $rating;
-        $sql = 'UPDATE ' . $this->table . ' SET rating = :rating WHERE bnum = :bnum';
-        $this->stmt = $this->pdo->prepare($sql);
-        $this->stmt->bindParam(':rating', $newRating);
         $this->stmt->bindParam(':bnum', $bnum);
         $this->stmt->execute();
     }
@@ -214,28 +202,48 @@ class BlogManagement{
         $this->stmt->bindParam(':bnum', $bnum);
         $this->stmt->execute();
     }
-    public function averageRating($rating, $bnum){
-            $all = str_split($rating);
-            $sum = 0;
-            $stars = 5;
-            foreach ($all as $value) {
-                $sum += (int) $value;
-            }
-            $average = $sum / count($all);
-            round($average);
-            $num = 0;
-            $average = (int) $average;
-            for ($i = 0; $i < $stars; $i++) {
-                if ($i < $average) {
-                    $num = $i + 1;
-                    echo '<a href="star.php?rating=' . $num . '&bnum=' . $bnum . '"><span class="fa fa-star checked" id="starA"></span></a>';
-                } else {
-                    $num = $i + 1;
-                    echo '<a href="star.php?rating=' . $num . '&bnum=' . $bnum . '"><span class="fa fa-star" id="starA"></span></a>';
-                }
-            }
-            echo " Ratings: " . count($all);
+    public function addRating($bnum, $rating){
+        $this->dbConnect();
+        $sql = 'SELECT rating FROM ' . $this->table . ' WHERE bnum = :bnum';
+        $this->stmt = $this->pdo->prepare($sql);
+        $this->stmt->bindParam(':bnum', $bnum);
+        $this->stmt->execute();
+        $result = $this->stmt->fetch(PDO::FETCH_OBJ);
+        $currentRating = $result->rating;
+        $newRating = $currentRating .= $rating;
+        $sql = 'UPDATE ' . $this->table . ' SET rating = :rating WHERE bnum = :bnum';
+        $this->stmt = $this->pdo->prepare($sql);
+        $this->stmt->bindParam(':rating', $newRating);
+        $this->stmt->bindParam(':bnum', $bnum);
+        $this->stmt->execute();
+    }
+    static public function averageRating($rating, $bnum){
+        $all = str_split($rating);
+        $sum = 0;
+        $stars = 5;
+        foreach ($all as $value) {
+            $sum += (int) $value;
         }
+        $average = $sum / count($all);
+        $average = floor($average * 2) / 2;
+        for ($i = 0; $i < $stars;) {
+            if ($i + 0.5 < $average) {
+                $num = $i + 1;
+                $i++;
+                echo '<a href="star.php?rating=' . $num . '&bnum=' . $bnum . '"><span class="fa fa-star checked" id="starA"></span></a>';
+            } elseif ($i - 0.5 < $average && $average > $i) {
+                $num = $i + 1;
+                $i++;
+                echo '<a href="star.php?rating=' . $num . '&bnum=' . $bnum . '"><span class="fa fa-star-half-empty checked" id="starA"></span></a>';
+            } else {
+                $num = $i + 1;
+                $i++;
+                echo '<a href="star.php?rating=' . $num . '&bnum=' . $bnum . '"><span class="fa fa-star" id="starA"></span></a>';
+            }
+        }
+        echo " Ratings: " . count($all);
+    }
 }
 
+?>
 

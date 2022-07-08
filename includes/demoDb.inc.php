@@ -42,6 +42,29 @@ CREATE TABLE Users (
 	pwd VARCHAR(255),
 	PRIMARY KEY(user)
 );
+
+INSERT INTO Users
+	(user, pwd)
+VALUES
+	("user","' . password_hash('user', PASSWORD_DEFAULT) . '");
+
+
+CREATE TABLE Comments (
+	cnum INTEGER AUTO_INCREMENT,
+	blogNum INTEGER,
+	text TEXT,
+	user VARCHAR(50),
+	created INTEGER,
+	PRIMARY KEY(cnum)
+);
+
+INSERT INTO Comments
+	(blogNum, text, user, created)
+VALUES
+	(1, "Comment on first blog", "user", ' . time() . '),
+	(3, "First comment on third blog", "user", ' . time() . '),
+	(3, "Second comment on third blog", "user", ' . time() . ');
+
 ';
 
 
