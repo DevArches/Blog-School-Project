@@ -13,16 +13,17 @@ CREATE TABLE Blogs (
 	subject VARCHAR(50),
 	text TEXT,
 	created INTEGER,
-	rating VARCHAR(50),
+	rating DECIMAL(8,1),
+	ratingCount INTEGER,
 	PRIMARY KEY(bnum)
 );
 
 INSERT INTO Blogs
-	(subject, text, rating, created) 
+	(subject, text, rating, ratingCount, created) 
 VALUES
-	("FirstPost", "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cumque tenetur officia fugiat ipsam hic mollitia consectetur explicabo saepe aspernatur et, deleniti minus numquam earum similique quasi eligendi, corporis nostrum magni?", "13425", ' . time() . '),
-    ("SecondPost", "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cumque tenetur officia fugiat ipsam hic mollitia consectetur explicabo saepe aspernatur et, deleniti minus numquam earum similique quasi eligendi, corporis nostrum magni?", "31341342123", ' . time() . '),
-    ("ThirdPost", "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cumque tenetur officia fugiat ipsam hic mollitia consectetur explicabo saepe aspernatur et, deleniti minus numquam earum similique quasi eligendi, corporis nostrum magni?", "1245", ' . time() . ');
+	("FirstPost", "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cumque tenetur officia fugiat ipsam hic mollitia consectetur explicabo saepe aspernatur et, deleniti minus numquam earum similique quasi eligendi, corporis nostrum magni?", "4.5", "3", ' . time() . '),
+    ("SecondPost", "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cumque tenetur officia fugiat ipsam hic mollitia consectetur explicabo saepe aspernatur et, deleniti minus numquam earum similique quasi eligendi, corporis nostrum magni?", "1", "2", ' . time() . '),
+    ("ThirdPost", "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cumque tenetur officia fugiat ipsam hic mollitia consectetur explicabo saepe aspernatur et, deleniti minus numquam earum similique quasi eligendi, corporis nostrum magni?", "2", "2", ' . time() . ');
 	
 CREATE TABLE Admins (
 	user VARCHAR(50),
@@ -76,4 +77,7 @@ $db->exec($sql);
 
 
 
-echo 'Datenbank "fa111" mit der Tabelle "Blog" wurde erstellt';
+header('Location: ../index.php');
+exit;
+?>
+

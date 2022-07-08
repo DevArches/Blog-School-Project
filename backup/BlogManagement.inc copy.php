@@ -3,20 +3,18 @@ class Blog{
     private $bnum = 0;
     private $subject = "";
     private $text = "";
-    private $rating = 0.0;
-    private $ratingCount = 0;
+    private $rating = "";
     private $created = 0;
     private $admin= false;
     private $loggedIn = false;
 
 
 
-    public function __construct($bnum, $subject = '', $text = '', $rating = 0, $ratingCount=0, $created = 0){
+    public function __construct($bnum, $subject = '', $text = '', $rating = '', $created = 0){
         $this->setBnum($bnum);
         $this->setSubject($subject);
         $this->setText($text);
         $this->setRating($rating);
-        $this->setRatingCount($ratingCount);
         $this->setCreated($created);
 
     }
@@ -62,12 +60,9 @@ class Blog{
     public function setLoggedIn($loggedIn){
         $this->loggedIn = $loggedIn;
     }
-    public function getRatingCount(){
-        return $this->ratingCount;
-    }
-    public function setRatingCount($ratingCount){
-        $this->ratingCount = $ratingCount;
-    }
+
+
+
 }
 
 
@@ -80,9 +75,6 @@ class BlogManagement{
     public $loggedIn = false;
     public $admin = false;
 
-    public function __construct(){
-        $this->dbConnect();
-    }
 
     public function dbConnect(){
         $dns = 'mysql:host=localhost;dbname=fa111;port=3306';
@@ -101,13 +93,13 @@ class BlogManagement{
         }
     }
     public function getBlogs(){
-
+        $this->dbConnect();
         $sql = 'SELECT * FROM ' . $this->table . ' ORDER BY bnum DESC';
         $this->stmt = $this->pdo->prepare($sql);
         $this->stmt->execute();
         $result = $this->stmt->fetchAll(PDO::FETCH_OBJ);
         foreach($result as $blog){
-            $this->blogs[] = new Blog($blog->bnum, $blog->subject, $blog->text, $blog->rating, $blog->ratingCount, $blog->created);
+            $this->blogs[] = new Blog($blog->bnum, $blog->subject, $blog->text, $blog->rating, $blog->created);
         }
         return $this->blogs;
     }
@@ -134,7 +126,7 @@ class BlogManagement{
         }
     }
     public function deleteBlog($bnum){
-
+        $this->dbConnect();
         $sql = 'DELETE FROM ' . $this->table . ' WHERE bnum = :bnum';
         $this->stmt = $this->pdo->prepare($sql);
         $this->stmt->bindParam(':bnum', $bnum);
@@ -142,7 +134,7 @@ class BlogManagement{
     }
     public function login($username, $password){
         $adminTable = 'Admins';
-
+        $this->dbConnect();
         $sql = 'SELECT * FROM ' . $adminTable . ' WHERE user = :user';
         $this->stmt = $this->pdo->prepare($sql);
         $this->stmt->bindParam(':user', $username);
@@ -193,7 +185,7 @@ class BlogManagement{
         exit;
     }
     public function newBlog($subject, $text , $rating){
-
+        $this->dbConnect();
         $sql = 'INSERT INTO ' . $this->table . ' (subject, text, rating) VALUES (:subject, :text, :rating)';
         $this->stmt = $this->pdo->prepare($sql);
         $this->stmt->bindParam(':subject', $subject);
@@ -210,53 +202,36 @@ class BlogManagement{
         $this->stmt->bindParam(':bnum', $bnum);
         $this->stmt->execute();
     }
-    public function averageRating($bnum, $rating){
-
-    }
     public function addRating($bnum, $rating){
-        $newRating = $rating;
-        $sql = 'SELECT * FROM ' . $this->table . ' WHERE bnum = :bnum';
+        $this->dbConnect();
+        $sql = 'SELECT rating FROM ' . $this->table . ' WHERE bnum = :bnum';
         $this->stmt = $this->pdo->prepare($sql);
         $this->stmt->bindParam(':bnum', $bnum);
         $this->stmt->execute();
         $result = $this->stmt->fetch(PDO::FETCH_OBJ);
         $currentRating = $result->rating;
-        $currentRatingCount = $result->ratingCount;
-        $newRatingCount = $currentRatingCount + 1;
-        $newRating = (($currentRating * $currentRatingCount) + $newRating) / $newRatingCount;
-        $sql = 'UPDATE ' . $this->table . ' SET rating = :rating, ratingCount = :ratingCount WHERE bnum = :bnum';
+        $newRating = $currentRating .= $rating;
+        $sql = 'UPDATE ' . $this->table . ' SET rating = :rating WHERE bnum = :bnum';
         $this->stmt = $this->pdo->prepare($sql);
         $this->stmt->bindParam(':rating', $newRating);
-        $this->stmt->bindParam(':ratingCount', $newRatingCount);
         $this->stmt->bindParam(':bnum', $bnum);
         $this->stmt->execute();
     }
-    public function getAverageRating($bnum){
-
-        $sql = 'SELECT * FROM ' . $this->table . ' WHERE bnum = :bnum';
-        $this->stmt = $this->pdo->prepare($sql);
-        $this->stmt->bindParam(':bnum', $bnum);
-        $this->stmt->execute();
-        $result = $this->stmt->fetch(PDO::FETCH_OBJ);
-        $average = $result->rating;
-        return $average;
-    }
-    public function getStars($bnum){
-
-        $sql = 'SELECT * FROM ' . $this->table . ' WHERE bnum = :bnum';
-        $this->stmt = $this->pdo->prepare($sql);
-        $this->stmt->bindParam(':bnum', $bnum);
-        $this->stmt->execute();
-        $result = $this->stmt->fetch(PDO::FETCH_OBJ);
-        $rating = $result->rating;
-        $ratingCount = $result->ratingCount;
+    static public function averageRating($rating, $bnum){
+        $all = str_split($rating);
+        $sum = 0;
         $stars = 5;
+        foreach ($all as $value) {
+            $sum += (int) $value;
+        }
+        $average = $sum / count($all);
+        $average = floor($average * 2) / 2;
         for ($i = 0; $i < $stars;) {
-            if ($i + 0.5 < $rating) {
+            if ($i + 0.5 < $average) {
                 $num = $i + 1;
                 $i++;
                 echo '<a href="star.php?rating=' . $num . '&bnum=' . $bnum . '"><span class="fa fa-star checked" id="starA"></span></a>';
-            } elseif ($i - 0.5 < $rating && $rating > $i) {
+            } elseif ($i - 0.5 < $average && $average > $i) {
                 $num = $i + 1;
                 $i++;
                 echo '<a href="star.php?rating=' . $num . '&bnum=' . $bnum . '"><span class="fa fa-star-half-empty checked" id="starA"></span></a>';
@@ -266,10 +241,9 @@ class BlogManagement{
                 echo '<a href="star.php?rating=' . $num . '&bnum=' . $bnum . '"><span class="fa fa-star" id="starA"></span></a>';
             }
         }
-        echo ' Ratings: ' . $ratingCount;
+        echo " Ratings: " . count($all);
     }
 }
-
 
 ?>
 

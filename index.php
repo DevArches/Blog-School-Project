@@ -19,6 +19,9 @@ require_once './includes/ini.inc.php';
 </head>
 
 <body>
+    <button>
+        <a href="./includes/demoDb.inc.php">Reset Database</a>
+    </button>
     <?php if ($loggedIn == true) { ?>
         <p><?php echo ucfirst(strtolower($_SESSION['username'])) . ' is logged in' ?></p>
         <button>
@@ -47,7 +50,7 @@ require_once './includes/ini.inc.php';
 
                 <p>Created: <?php echo $post->getCreated() ?></p>
 
-                <p><?php $blog->averageRating($post->getRating(), $post->getBnum()) ?></p>
+                <p><?php $blog->getStars($post->getBnum()) ?></p>
 
                 <?php $comment = new CommentManagement();
                 $comments = $comment->getComments($post->getBnum()); ?>
