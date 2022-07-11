@@ -2,6 +2,8 @@
 
 require_once './includes/ini.inc.php';
 
+$blog = new BlogManagement();
+
 
 ?>
 
@@ -19,27 +21,31 @@ require_once './includes/ini.inc.php';
 </head>
 
 <body>
-    <button>
-        <a href="./includes/demoDb.inc.php">Reset Database</a>
-    </button>
+    <?php if ($admin == true) { ?>
+        <button>
+            <a href="./includes/demoDb.inc.php">Reset Database</a>
+        </button>
+    <?php }; ?>
     <?php if ($loggedIn == true) { ?>
         <p><?php echo ucfirst(strtolower($_SESSION['username'])) . ' is logged in' ?></p>
         <button>
             <a href="logout.php">Logout</a>
         </button>
-        <br /><br />
-        <button>
-            <a href="newBlog.php">Add Blog</a>
-        </button>
     <?php } else { ?>
         <button>
             <a href="login.php">Login</a>
+        </button>
+    <?php } 
+    if ($admin == true) {?>
+            <br /><br />
+        <button>
+            <a href="newBlog.php">Add Blog</a>
         </button>
     <?php } ?>
     <div id="main">
         <h1>Blog</h1>
         <?php
-        $blog = new BlogManagement();
+
         $blogs = $blog->getBlogs();
         foreach ($blogs as $post) { ?>
             <div id="blog">
@@ -59,10 +65,13 @@ require_once './includes/ini.inc.php';
                     <?php foreach ($comments as $comment) {
                         if ($comment->getBlogNum() == $post->getBnum()) { ?>
                             <p><?php echo $comment->getText() ?> <br />
-                            Created: <?php echo $comment->getCreated() ?> <br />
-                            From :<?php echo $comment->getUser() ?> </p>
-                    <?php }
-                    } ?>
+                                Created: <?php echo $comment->getCreated() ?> <br />
+                                From :<?php echo $comment->getUser() ?> </p>
+                        <?php }
+                    }
+                    if ($loggedIn == true) { ?>
+                        <a href="addComment.php?bnum=<?php echo $post->getBnum() ?>">Add Comment</a>
+                    <?php } ?>
                 </div>
 
                 <?php if ($admin == true) { ?>

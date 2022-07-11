@@ -1,7 +1,7 @@
 <?php
-session_start();
+
 require_once './includes/ini.inc.php';
-spl_autoload_register('myAutoLoader');
+
 
 $res = '';
 $bnum = $_GET['bnum'];

@@ -46,32 +46,17 @@ class Comment{
     }
 }
 
-class CommentManagement{
+class CommentManagement extends BlogManagement{
     public $comments = array();
     public $table = "Comments";
     public $stmt = '';
     public $db = '';
     public $pdo = null;
-    public $loggedIn = false;
-    public $admin = false;
     public $user = '';
+    public $time = 0;
 
-    public function dbConnect(){
-        $dns = 'mysql:host=localhost;dbname=fa111;port=3306';
-        $user = 'root';
-        $pwd = '';
-        $opt = [
-            PDO::ATTR_PERSISTENT => true,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true,
-        ];
-        try {
-            $this->pdo = new PDO($dns, $user, $pwd, $opt);
-        } catch (PDOException $e) {
-            echo 'Verbindungsfehler: ' . $e->getMessage();
-        }
-    }
+
+
     public function getComments(){
         $this->dbConnect();
         $sql = 'SELECT * FROM ' . $this->table . ' ORDER BY created DESC';
@@ -98,6 +83,25 @@ class CommentManagement{
         }
         return $this->comments;
     }
+    public function setTime(){
+        $this->time = time();
+        return $this->time;
+    }
+    public function addComment($blogNum, $text, $user){
+            $this->isLoggedIn();
+            if(!$this->loggedIn){
+                echo 'You must be logged in to comment';
+                exit;
+            } else {
+            $this->dbConnect();
+            $sql = 'INSERT INTO ' . $this->table . ' (blogNum, text, user, created) VALUES (:blogNum, :text, :user, :created)';
+            $this->stmt = $this->pdo->prepare($sql);
+            $this->stmt->bindParam(':blogNum', $blogNum);
+            $this->stmt->bindParam(':text', $text);
+            $this->stmt->bindParam(':user', $user);
+            $this->stmt->bindParam(':created', $this->setTime());
+            $this->stmt->execute();
+            }
+    }
 }
-
 ?>

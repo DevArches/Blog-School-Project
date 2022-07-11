@@ -1,13 +1,13 @@
 <?php
 class Blog{
-    private $bnum = 0;
-    private $subject = "";
-    private $text = "";
-    private $rating = 0.0;
-    private $ratingCount = 0;
-    private $created = 0;
-    private $admin= false;
-    private $loggedIn = false;
+    protected $bnum = 0;
+    protected $subject = "";
+    protected $text = "";
+    protected $rating = 0.0;
+    protected $ratingCount = 0;
+    protected $created = 0;
+    protected $admin= false;
+    protected $loggedIn = false;
 
 
 
@@ -30,7 +30,7 @@ class Blog{
         return $this->subject;
     }
     public function setSubject($subject){
-        $this->subject = $subject;
+        $this->subject = ucwords(strtolower($subject));
     }
     public function getText(){
         return $this->text;
@@ -72,18 +72,22 @@ class Blog{
 
 
 class BlogManagement{
-    public $blogs = array();
-    public $table = 'Blogs';
-    public $stmt = '';
-    public $db = '';
-    public $pdo = null;
-    public $loggedIn = false;
-    public $admin = false;
+    protected $blogs = array();
+    protected $table = 'Blogs';
+    protected $sql = '';
+    protected $result = '';
+    protected $stmt = '';
+    protected $db = '';
+    protected $pdo = null;
+    protected $loggedIn = false;
+    protected $admin = false;
+    protected $time = 0;
 
     public function __construct(){
         $this->dbConnect();
     }
-
+    
+    // Connect to the database
     public function dbConnect(){
         $dns = 'mysql:host=localhost;dbname=fa111;port=3306';
         $user = 'root';
@@ -100,6 +104,7 @@ class BlogManagement{
             echo 'Verbindungsfehler: ' . $e->getMessage();
         }
     }
+    // Get all blogs from the database
     public function getBlogs(){
 
         $sql = 'SELECT * FROM ' . $this->table . ' ORDER BY bnum DESC';
@@ -111,6 +116,7 @@ class BlogManagement{
         }
         return $this->blogs;
     }
+    //Check if user is Admin
     public function isAdmin($admin){
         if(isset($_SESSION['username']) && $_SESSION['username'] == $admin){
             return $this->admin = true;
@@ -118,6 +124,7 @@ class BlogManagement{
             return $this->admin = false;
         }
     }
+    //Check if user is logged in
     public function isLoggedIn(){
         if(isset($_SESSION['username'])){
             return $this->loggedIn = true;
@@ -125,6 +132,7 @@ class BlogManagement{
             return $this->loggedIn = false;
         }
     }
+    // Get a blog by its bnum
     public function getBlog($bnum){
         $this->getBlogs();
         foreach($this->blogs as $blog){
@@ -133,6 +141,7 @@ class BlogManagement{
             }
         }
     }
+    // Delete a blog by its bnum
     public function deleteBlog($bnum){
 
         $sql = 'DELETE FROM ' . $this->table . ' WHERE bnum = :bnum';
@@ -140,6 +149,7 @@ class BlogManagement{
         $this->stmt->bindParam(':bnum', $bnum);
         $this->stmt->execute();
     }
+    // Login with Admin or Username Table
     public function login($username, $password){
         $adminTable = 'Admins';
 
@@ -186,21 +196,28 @@ class BlogManagement{
             }
         }
     }
+    // Logout of session
     public function logout(){
         unset($_SESSION['username']);
         header('Location: index.php');
         header('Location: index.php');
         exit;
     }
+    public function setTime(){
+        $this->time = time();
+        return $this->time;
+    }
+    // Add a new blog to the database
     public function newBlog($subject, $text , $rating){
-
-        $sql = 'INSERT INTO ' . $this->table . ' (subject, text, rating) VALUES (:subject, :text, :rating)';
+        $sql = 'INSERT INTO ' . $this->table . ' (subject, text, rating, created) VALUES (:subject, :text, :rating , :created)';
         $this->stmt = $this->pdo->prepare($sql);
         $this->stmt->bindParam(':subject', $subject);
         $this->stmt->bindParam(':text', $text);
         $this->stmt->bindParam(':rating', $rating);
+        $this->stmt->bindParam(':created', $this->setTime());
         $this->stmt->execute();
     }
+    // Update a blog in the database by its bnum
     public function editBlog($bnum, $subject, $text){
         $this->dbConnect();
         $sql = 'UPDATE ' . $this->table . ' SET subject = :subject, text = :text WHERE bnum = :bnum';
@@ -210,9 +227,7 @@ class BlogManagement{
         $this->stmt->bindParam(':bnum', $bnum);
         $this->stmt->execute();
     }
-    public function averageRating($bnum, $rating){
-
-    }
+    // Update a blog in the database by its bnum
     public function addRating($bnum, $rating){
         $newRating = $rating;
         $sql = 'SELECT * FROM ' . $this->table . ' WHERE bnum = :bnum';
@@ -231,18 +246,21 @@ class BlogManagement{
         $this->stmt->bindParam(':bnum', $bnum);
         $this->stmt->execute();
     }
-    public function getAverageRating($bnum){
-
-        $sql = 'SELECT * FROM ' . $this->table . ' WHERE bnum = :bnum';
-        $this->stmt = $this->pdo->prepare($sql);
-        $this->stmt->bindParam(':bnum', $bnum);
-        $this->stmt->execute();
-        $result = $this->stmt->fetch(PDO::FETCH_OBJ);
-        $average = $result->rating;
-        return $average;
-    }
+    // Get rating of a blog by its bnum
+    // public function getAverageRating($bnum){
+    //     $sql = 'SELECT * FROM ' . $this->table . ' WHERE bnum = :bnum';
+    //     $this->stmt = $this->pdo->prepare($sql);
+    //     $this->stmt->bindParam(':bnum', $bnum);
+    //     $this->stmt->execute();
+    //     $result = $this->stmt->fetch(PDO::FETCH_OBJ);
+    //     $average = $result->rating;
+    //     $ratingCount = $result->ratingCount;
+    //     $average = $average * $ratingCount;
+    //     $average = $average / $ratingCount;
+    //     return $average;
+    // }
+    // Get rating and echo star rating based on average rating
     public function getStars($bnum){
-
         $sql = 'SELECT * FROM ' . $this->table . ' WHERE bnum = :bnum';
         $this->stmt = $this->pdo->prepare($sql);
         $this->stmt->bindParam(':bnum', $bnum);

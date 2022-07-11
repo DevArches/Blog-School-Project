@@ -1,0 +1,5 @@
+Clean Getter/Setter
+Blog Management remove extra SQL
+Remove comments?
+PUBLIC IS BAD
+Rating database
