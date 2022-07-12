@@ -3,6 +3,7 @@
 require_once './includes/ini.inc.php';
 
 $blog = new BlogManagement();
+$rating = new RatingManagement();
 
 
 ?>
@@ -56,9 +57,9 @@ $blog = new BlogManagement();
 
                 <p>Created: <?php echo $post->getCreated() ?></p>
 
-                <p><?php $blog->getStars($post->getBnum()) ?></p>
+                <p><?php $rating->Stars($post->getBnum()); echo ' Ratings: ' . $rating->getRatingCount($post->getBnum());?></p>
 
-                <?php $comment = new CommentManagement();
+                <?php $comment = new CommentManagement(new CommentRepository(new DBConnector()));
                 $comments = $comment->getComments($post->getBnum()); ?>
                 <div id='comments'>
                     <p>Comments:</p>

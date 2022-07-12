@@ -34,20 +34,23 @@ CREATE TABLE Admins (
 INSERT INTO Admins
 	(user, pwd)
 VALUES
-	("admin","' . password_hash('admin', PASSWORD_DEFAULT) . '"),
-	("ryan","' . password_hash('ryan', PASSWORD_DEFAULT) . '");
+	("admin","' . password_hash('admin', PASSWORD_DEFAULT) . '");
 
 
 CREATE TABLE Users (
 	user VARCHAR(50),
 	pwd VARCHAR(255),
+	admin BOOLEAN,
 	PRIMARY KEY(user)
 );
 
 INSERT INTO Users
-	(user, pwd)
+	(user, pwd , admin)
 VALUES
-	("user","' . password_hash('user', PASSWORD_DEFAULT) . '");
+	("admin","' . password_hash('admin', PASSWORD_DEFAULT) . '", "1"),
+	("user","' . password_hash('user', PASSWORD_DEFAULT) . '", "0");
+
+
 
 
 CREATE TABLE Comments (
@@ -66,6 +69,22 @@ VALUES
 	(3, "First comment on third blog", "user", ' . time() . '),
 	(3, "Second comment on third blog", "user", ' . time() . ');
 
+
+CREATE TABLE Ratings (
+	rnum INTEGER AUTO_INCREMENT,
+	bnum INTEGER,
+	user VARCHAR(50),
+	rating DECIMAL(8,1),
+	PRIMARY KEY(rnum)
+);
+
+INSERT INTO Ratings
+	(bnum, user, rating)
+VALUES
+	(1, "Ryan", "5"),
+	(2, "Alaa", "1"),
+	(3, "Hacker", "1"),
+	(3, "Test", "5");
 ';
 
 

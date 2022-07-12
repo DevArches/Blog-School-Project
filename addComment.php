@@ -1,7 +1,7 @@
 <?php
 
 require_once './includes/ini.inc.php';
-$comment = new CommentManagement();
+$comment = new CommentManagement(new CommentRepository(new DBConnector()));
 
 
 $bnum = '';
