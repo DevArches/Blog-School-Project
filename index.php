@@ -2,8 +2,8 @@
 
 require_once './includes/ini.inc.php';
 
-$blog = new BlogManagement();
-$rating = new RatingManagement();
+$blog = new PostManagement();
+$rating = new RatingManagement(new RatingRepository(new DBConnector()));
 
 
 ?>
@@ -36,9 +36,9 @@ $rating = new RatingManagement();
         <button>
             <a href="login.php">Login</a>
         </button>
-    <?php } 
-    if ($admin == true) {?>
-            <br /><br />
+    <?php }
+    if ($admin == true) { ?>
+        <br /><br />
         <button>
             <a href="newBlog.php">Add Blog</a>
         </button>
@@ -57,7 +57,8 @@ $rating = new RatingManagement();
 
                 <p>Created: <?php echo $post->getCreated() ?></p>
 
-                <p><?php $rating->Stars($post->getBnum()); echo ' Ratings: ' . $rating->getRatingCount($post->getBnum());?></p>
+                <p><?php $rating->Stars($post->getBnum());
+                    echo ' Ratings: ' . $rating->getRatingCount($post->getBnum()); ?></p>
 
                 <?php $comment = new CommentManagement(new CommentRepository(new DBConnector()));
                 $comments = $comment->getComments($post->getBnum()); ?>

@@ -4,7 +4,8 @@ require_once './includes/ini.inc.php';
 
 
 
-function averageRating($rating, $bnum){
+function averageRating($rating, $bnum)
+{
     global $admin;
     $all = str_split($rating);
     $sum = 0;
@@ -75,8 +76,8 @@ function averageRating($rating, $bnum){
         <h1>Blog</h1>
         <p>
             <?php
-            $blogManagement = new BlogManagement();
-            $blogs = $blogManagement->getAllBlogs();
+            $PostManagement = new PostManagement();
+            $blogs = $PostManagement->getAllBlogs();
             foreach ($blogs as $blog) { ?>
         <div id="blog">
             <h2><?php echo $blog['subject'] ?></h2>

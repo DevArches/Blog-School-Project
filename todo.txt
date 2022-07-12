@@ -3,3 +3,5 @@ Clean Getter/Setter
 PUBLIC IS BAD
 
 Const table names
+
+NewBLog remove rating 

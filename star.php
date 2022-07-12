@@ -8,7 +8,7 @@ if(isset($_GET['rating']) && isset($_GET['bnum'])){
     $bnum = $_GET['bnum'] ?? '';
     $user = $_SESSION['username'] ?? '';
     if ($newRating >= 1 && $newRating <= 5 && $bnum >= 1) {
-    $r = new RatingManagement();
+    $r = new RatingManagement(new RatingRepository(new DBConnector()));
     $r->newRating($bnum, $newRating, $user);
     header ('Location: index.php');
     }

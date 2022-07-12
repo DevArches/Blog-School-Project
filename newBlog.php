@@ -11,8 +11,8 @@ if (isset($_POST['submit']) && $admin == true) {
     $subject = $_POST['subject'];
     $text = $_POST['text'];
     $rating = $_POST['rating'];
-    $blogManagement = new BlogManagement();
-    $blogManagement->newBlog($subject, $text, $rating);
+    $PostManagement = new PostManagement();
+    $PostManagement->newBlog($subject, $text, $rating);
     header('Location: index.php');
     exit;
 }

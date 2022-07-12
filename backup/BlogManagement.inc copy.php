@@ -66,7 +66,7 @@ class Blog{
 }
 
 
-class BlogManagement{
+class PostManagement{
     public $blogs = array();
     public $table = 'Blogs';
     public $stmt = '';
@@ -244,6 +244,3 @@ class BlogManagement{
         echo " Ratings: " . count($all);
     }
 }
-
-?>
-

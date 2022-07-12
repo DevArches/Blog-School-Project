@@ -11,7 +11,7 @@ $sql = '';
 if (isset($_GET['bnum'])) {
     $bnum = $_GET['bnum'] ?? '';
     if (is_numeric($bnum)) {
-        $blog = new BlogManagement($bnum);
+        $blog = new PostManagement($bnum);
         $blog = $blog->getBlog($bnum);
         $subject = $blog->getSubject();
         $text = $blog->getText();
@@ -22,8 +22,8 @@ if (isset($_POST['submit']) && $admin == true) {
     $subject = $_POST['subject'] ?? '';
     $text = $_POST['text'] ?? '';
     $bnum = $_POST['bnum'] ?? '';
-    $blogManagement = new BlogManagement();
-    $blogManagement->editBlog($bnum, $subject, $text);
+    $PostManagement = new PostManagement();
+    $PostManagement->editBlog($bnum, $subject, $text);
     header('Location: index.php');
 }
 

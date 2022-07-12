@@ -1,85 +1,32 @@
 <?php
-
-class Rating
+class RatingManagement
 {
-    protected $rnum;
-    protected $bnum;
-    protected $user;
+    private $ratingRepository;
 
-
-    public function __construct($rnum, $bnum, $user)
+    public function __construct($ratingRepository)
     {
-        $this->setRnum($rnum);
-        $this->setBnum($bnum);
-        $this->setUser($user);
+        $this->ratingRepository = $ratingRepository;
     }
-    public function getRnum()
+    public function getRatings()
     {
-        return $this->rnum;
+        $ratings = $this->ratingRepository->getAll();
+        return $ratings;
     }
-    public function setRnum($rnum)
+    public function getRatingCount($bnum)
     {
-        $this->rnum = $rnum;
-    }
-    public function getBnum()
-    {
-        return $this->bnum;
-    }
-    public function setBnum($bnum)
-    {
-        $this->bnum = $bnum;
-    }
-    public function getUser()
-    {
-        return $this->user;
-    }
-    public function setUser($user)
-    {
-        $this->user = $user;
-    }
-}
-
-class RatingManagement extends BlogManagement
-{
-    protected $ratingCount = 0;
-    protected $ratings = array();
-    protected $table = "Ratings";
-    protected $stmt = '';
-    protected $db = '';
-    protected $pdo = null;
-    protected $user = '';
-    protected $time = 0;
-
-    public function __construct(){
-        $this->dbConnect();
-    }
-    public function getRatings(){
-
-        $this->stmt = $this->pdo->prepare("SELECT * FROM $this->table");
-        $this->stmt->execute();
-        $result = $this->stmt->fetchAll(PDO::FETCH_CLASS);
-        foreach ($result as $rating) {
-            $this->ratings[] = new Rating($rating->rnum, $rating->bnum, $rating->user, $rating->rating);
+        $ratings = $this->getRatings();
+        $count = 0;
+        foreach ($ratings as $rating) {
+            if ($rating['bnum'] == $bnum) {
+                $count++;
+            }
         }
-        return $this->ratings;
+        return $count;
     }
-    public function getRatingCount($bnum){
-        $this->stmt = $this->pdo->prepare("SELECT COUNT(*) FROM $this->table WHERE bnum = :bnum");
-        $this->stmt->bindParam(':bnum', $bnum);
-        $this->stmt->execute();
-        $result = $this->stmt->fetch(PDO::FETCH_ASSOC);
-        $this->ratingCount = $result['COUNT(*)'];
-        return $this->ratingCount;
-    }
-    public function getRatingAverage($bnum){
-        $this->stmt = $this->pdo->prepare("SELECT AVG(rating) FROM $this->table WHERE bnum = :bnum");
-        $this->stmt->bindParam(':bnum', $bnum);
-        $this->stmt->execute();
-        $result = $this->stmt->fetch(PDO::FETCH_NUM);
-        return $result[0];
-    }
-    public function Stars($bnum){
-        $rating = $this->getRatingAverage($bnum);
+
+    public function Stars($bnum)
+    {
+        $rating = $this->ratingRepository->getRatingAverage($bnum);
         $stars = 5;
         for ($i = 0; $i < $stars;) {
             if ($i + 0.5 < $rating) {
@@ -97,31 +44,12 @@ class RatingManagement extends BlogManagement
             }
         }
     }
-    public function newRating($bnum, $newRating, $user){
-        if ($this->checkUserRating($bnum, $user) == false) {
-            $this->stmt = $this->pdo->prepare("INSERT INTO $this->table (bnum, user, rating) VALUES (:bnum, :user, :rating)");
-            $this->stmt->bindParam(':bnum', $bnum);
-            $this->stmt->bindParam(':user', $user);
-            $this->stmt->bindParam(':rating', $newRating);
-            $this->stmt->execute();
-        } else {
-            $this->stmt = $this->pdo->prepare("UPDATE $this->table SET rating = :rating WHERE bnum = :bnum AND user = :user");
-            $this->stmt->bindParam(':bnum', $bnum);
-            $this->stmt->bindParam(':user', $user);
-            $this->stmt->bindParam(':rating', $newRating);
-            $this->stmt->execute();
-        }
+    public function newRating($bnum, $newRating, $user)
+    {
+        $this->ratingRepository->newRating($bnum, $newRating, $user);
     }
-    public function checkUserRating($bnum, $user){
-        $this->stmt = $this->pdo->prepare("SELECT * FROM $this->table WHERE bnum = :bnum AND user = :user");
-        $this->stmt->bindParam(':bnum', $bnum);
-        $this->stmt->bindParam(':user', $user);
-        $this->stmt->execute();
-        $this->stmt->fetch();
-        if ($this->stmt->rowCount() > 0) {
-            return true;
-        } else {
-            return false;
-        }
+    public function checkUserRating($bnum, $user)
+    {
+        return $this->ratingRepository->checkUserRating($bnum, $user); 
     }
 }

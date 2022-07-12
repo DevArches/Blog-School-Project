@@ -5,9 +5,9 @@ require_once './includes/ini.inc.php';
 
 $res = '';
 $bnum = $_GET['bnum'];
-$blogManagement = new BlogManagement();
+$PostManagement = new PostManagement();
 if ($admin == true) {
-    $blogManagement->deleteBlog($bnum);
+    $PostManagement->deleteBlog($bnum);
     header('Location: index.php');
     exit;
 } else {
