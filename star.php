@@ -1,9 +1,10 @@
 <?php
 require_once './includes/ini.inc.php';
 
-
-
-if(isset($_GET['rating']) && isset($_GET['bnum'])){
+if($loggedIn == false) {
+    header('Location: index.php');
+    exit;
+} else if(isset($_GET['rating']) && isset($_GET['bnum'])){
     $newRating = $_GET['rating'] ?? '';
     $bnum = $_GET['bnum'] ?? '';
     $user = $_SESSION['username'] ?? '';

@@ -25,17 +25,6 @@ VALUES
     ("SecondPost", "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cumque tenetur officia fugiat ipsam hic mollitia consectetur explicabo saepe aspernatur et, deleniti minus numquam earum similique quasi eligendi, corporis nostrum magni?", "1", "2", ' . time() . '),
     ("ThirdPost", "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cumque tenetur officia fugiat ipsam hic mollitia consectetur explicabo saepe aspernatur et, deleniti minus numquam earum similique quasi eligendi, corporis nostrum magni?", "2", "2", ' . time() . ');
 	
-CREATE TABLE Admins (
-	user VARCHAR(50),
-	pwd VARCHAR(255),
-	PRIMARY KEY(user)
-);
-
-INSERT INTO Admins
-	(user, pwd)
-VALUES
-	("admin","' . password_hash('admin', PASSWORD_DEFAULT) . '");
-
 
 CREATE TABLE Users (
 	user VARCHAR(50),

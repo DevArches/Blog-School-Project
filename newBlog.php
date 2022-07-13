@@ -10,9 +10,8 @@ $rating = '';
 if (isset($_POST['submit']) && $admin == true) {
     $subject = $_POST['subject'];
     $text = $_POST['text'];
-    $rating = $_POST['rating'];
     $PostManagement = new PostManagement();
-    $PostManagement->newBlog($subject, $text, $rating);
+    $PostManagement->newBlog($subject, $text);
     header('Location: index.php');
     exit;
 }
@@ -38,8 +37,6 @@ if (isset($_POST['submit']) && $admin == true) {
         <label for="text">Text:</label><br />
         <textarea id="text" name="text" rows="10" cols="50"><?= $text ?></textarea>
         <br /><br />
-        <label for="rating">Rating:</label><br />
-        <input type="range" min="1" max="5" class="slider" name="rating" id="rating" value="<?= $rating ?>">
         <input type="submit" name="submit" value="Save" />
         <br /><br />
     </form>

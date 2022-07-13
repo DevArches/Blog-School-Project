@@ -7,12 +7,17 @@ require_once 'loggedin.inc.php';
 
 function myAutoLoader($class)
 {
-    $file = './Classes/' . $class . '.inc.php';
-    if (file_exists($file)) {
-        include_once $file;
-    } else {
-        echo 'File not found';
-    }
+    $dirs = array(
+        "./Classes/",
+        "./Classes/Models/",
+        "./Classes/Managers/",
+        "./Classes/Repos/",
+    );
+    foreach ($dirs as $dir) {
+        if (file_exists($dir . $class . '.inc.php')) {
+            include_once $dir . $class . '.inc.php';
+        }
+    } 
 }
 spl_autoload_register('myAutoLoader');
 

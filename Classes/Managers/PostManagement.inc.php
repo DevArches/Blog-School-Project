@@ -114,13 +114,12 @@ class PostManagement
         return $this->time;
     }
 
-    public function newBlog($subject, $text, $rating)
+    public function newBlog($subject, $text)
     {
-        $sql = 'INSERT INTO ' . $this->table . ' (subject, text, rating, created) VALUES (:subject, :text, :rating , :created)';
+        $sql = 'INSERT INTO ' . $this->table . ' (subject, text, created) VALUES (:subject, :text, :created)';
         $this->stmt = $this->pdo->prepare($sql);
         $this->stmt->bindParam(':subject', $subject);
         $this->stmt->bindParam(':text', $text);
-        $this->stmt->bindParam(':rating', $rating);
         $this->stmt->bindParam(':created', $this->setTime());
         $this->stmt->execute();
     }

@@ -1,5 +1,6 @@
 <?php
-class RatingRepository{
+class RatingRepository
+{
     private const TABLE = 'Ratings';
 
     private $pdo = null;
@@ -8,14 +9,16 @@ class RatingRepository{
     {
         $this->pdo = $dBConnector->dbConnect();
     }
-    public function getAll(){
+    public function getAll()
+    {
         $sql = "SELECT * FROM " . self::TABLE;
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
-    public function getRatingAverage($bnum){
+    public function getRatingAverage($bnum)
+    {
         $sql = "SELECT AVG(rating) FROM " . self::TABLE . " WHERE bnum = :bnum";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindParam(':bnum', $bnum);
@@ -23,8 +26,9 @@ class RatingRepository{
         $result = $stmt->fetch(PDO::FETCH_NUM);
         return $result[0];
     }
-    public function newRating($bnum, $newRating, $user){
-        if($this->checkUserRating($bnum, $user) == false){
+    public function newRating($bnum, $newRating, $user)
+    {
+        if ($this->checkUserRating($bnum, $user) == false) {
             $sql = "INSERT INTO " . self::TABLE . " (bnum, user, rating) VALUES (:bnum, :user, :rating)";
             $stmt = $this->pdo->prepare($sql);
             $stmt->bindParam(':bnum', $bnum);

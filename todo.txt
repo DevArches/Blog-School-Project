@@ -1,7 +1,8 @@
 Clean Getter/Setter
-
-PUBLIC IS BAD
-
 Const table names
 
-NewBLog remove rating 
+fix login
+
+PostManagement dbconnect
+Move login to BlogManagement
+objects from ini

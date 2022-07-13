@@ -1,6 +1,7 @@
 <?php
 require_once './includes/ini.inc.php';
 
+
 if (isset($_POST['login'])) {
     $blog = new PostManagement();
     $username = $_POST['username'];
@@ -10,7 +11,7 @@ if (isset($_POST['login'])) {
         $_SESSION['username'] = $username;
         header('Location: ./index.php');
         exit;
-    }
+    } 
 }
 
 ?>
@@ -32,6 +33,7 @@ if (isset($_POST['login'])) {
         <input type="password" name="password" id="password" placeholder="Enter Password" required>
         <input type="submit" name="login" value="Login">
     </form>
+    <p>Not registered? Too bad. Ask Ryan to add you</p>
 </body>
 
 </html>

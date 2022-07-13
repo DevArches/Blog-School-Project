@@ -24,3 +24,7 @@ p {
   border-radius: 2%;
   font-size: small;
 }
+#singleComment {
+  background-color: #202431;
+  border-radius: 2%;
+}

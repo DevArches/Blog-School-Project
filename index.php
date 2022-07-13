@@ -66,7 +66,7 @@ $rating = new RatingManagement(new RatingRepository(new DBConnector()));
                     <p>Comments:</p>
                     <?php foreach ($comments as $comment) {
                         if ($comment->getBlogNum() == $post->getBnum()) { ?>
-                            <p><?php echo $comment->getText() ?> <br />
+                            <p id='singleComment'><?php echo $comment->getText() ?> <br />
                                 Created: <?php echo $comment->getCreated() ?> <br />
                                 From :<?php echo $comment->getUser() ?> </p>
                         <?php }
