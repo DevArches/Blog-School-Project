@@ -1,5 +1,5 @@
 <?php
-class CommentManagement{
+class CommentManagement extends Comment{
     private $commentRepository;
 
     public function __construct($commentRepository){
@@ -22,4 +22,8 @@ class CommentManagement{
     public function addComment($blogNum, $text, $user){
         $this->commentRepository->insert($blogNum, $text, $user, $this->setTime());
     }
+    public function deleteComment($cnum, $user){
+        $this->commentRepository->deleteComment($cnum, $user);
+    }
 }
+ 

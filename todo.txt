@@ -1,8 +1,7 @@
 Clean Getter/Setter
-Const table names
 
-fix login
 
-PostManagement dbconnect
-Move login to BlogManagement
 objects from ini
+delete comment
+
+line 70

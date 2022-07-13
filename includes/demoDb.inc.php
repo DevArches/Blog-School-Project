@@ -10,20 +10,20 @@ USE fa111;
 
 CREATE TABLE Blogs (
 	bnum INTEGER AUTO_INCREMENT,
+	hidden BOOLEAN,
 	subject VARCHAR(50),
 	text TEXT,
 	created INTEGER,
-	rating DECIMAL(8,1),
-	ratingCount INTEGER,
 	PRIMARY KEY(bnum)
 );
 
 INSERT INTO Blogs
-	(subject, text, rating, ratingCount, created) 
+	(HIDDEN, subject, text, created) 
 VALUES
-	("FirstPost", "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cumque tenetur officia fugiat ipsam hic mollitia consectetur explicabo saepe aspernatur et, deleniti minus numquam earum similique quasi eligendi, corporis nostrum magni?", "4.5", "3", ' . time() . '),
-    ("SecondPost", "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cumque tenetur officia fugiat ipsam hic mollitia consectetur explicabo saepe aspernatur et, deleniti minus numquam earum similique quasi eligendi, corporis nostrum magni?", "1", "2", ' . time() . '),
-    ("ThirdPost", "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cumque tenetur officia fugiat ipsam hic mollitia consectetur explicabo saepe aspernatur et, deleniti minus numquam earum similique quasi eligendi, corporis nostrum magni?", "2", "2", ' . time() . ');
+	(0, "FirstPost", "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cumque tenetur officia fugiat ipsam hic mollitia consectetur explicabo saepe aspernatur et, deleniti minus numquam earum similique quasi eligendi, corporis nostrum magni?", ' . time() . '),
+    (0, "SecondPost", "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cumque tenetur officia fugiat ipsam hic mollitia consectetur explicabo saepe aspernatur et, deleniti minus numquam earum similique quasi eligendi, corporis nostrum magni?", ' . time() . '),
+    (0, "ThirdPost", "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cumque tenetur officia fugiat ipsam hic mollitia consectetur explicabo saepe aspernatur et, deleniti minus numquam earum similique quasi eligendi, corporis nostrum magni?", ' . time() . '),
+	(1, "FourthPost", "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cumque tenetur officia fugiat ipsam hic mollitia consectetur explicabo saepe aspernatur et, deleniti minus numquam earum similique quasi eligendi, corporis nostrum magni?", ' . time() . ');
 	
 
 CREATE TABLE Users (
@@ -56,7 +56,7 @@ INSERT INTO Comments
 VALUES
 	(1, "Comment on first blog", "user", ' . time() . '),
 	(3, "First comment on third blog", "user", ' . time() . '),
-	(3, "Second comment on third blog", "user", ' . time() . ');
+	(3, "Second comment on third blog", "admin", ' . time() . ');
 
 
 CREATE TABLE Ratings (

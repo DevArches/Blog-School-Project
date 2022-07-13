@@ -28,3 +28,6 @@ p {
   background-color: #202431;
   border-radius: 2%;
 }
+#hidden {
+  background-color: rgb(102, 45, 71);
+}

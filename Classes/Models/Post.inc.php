@@ -4,18 +4,16 @@ class Post
     private $bnum = 0;
     private $subject = "";
     private $text = "";
-    private $rating = 0.0;
-    private $ratingCount = 0;
     private $created = 0;
+    private $hidden = true;
 
-    public function __construct($bnum, $subject = '', $text = '', $rating = 0, $ratingCount = 0, $created = 0)
+    public function __construct($bnum, $subject = '', $text = '',  $created = 0, $hidden = true)
     {
         $this->setBnum($bnum);
         $this->setSubject($subject);
         $this->setText($text);
-        $this->setRating($rating);
-        $this->setRatingCount($ratingCount);
         $this->setCreated($created);
+        $this->setHidden($hidden);
     }
     public function getBnum()
     {
@@ -41,14 +39,7 @@ class Post
     {
         $this->text = $text;
     }
-    public function getRating()
-    {
-        return $this->rating;
-    }
-    public function setRating($rating)
-    {
-        $this->rating = $rating;
-    }
+
     public function getCreated()
     {
         return $this->created;
@@ -57,28 +48,13 @@ class Post
     {
         $this->created = date('l jS \of F Y h:i:sa', $created);
     }
-    public function getAdmin()
+    public function getHidden()
     {
-        return $this->admin;
+        return $this->hidden;
     }
-    public function setAdmin($admin)
+    public function setHidden($hidden)
     {
-        $this->admin = $admin;
+        $this->hidden = $hidden;
     }
-    public function getLoggedIn()
-    {
-        return $this->loggedIn;
-    }
-    public function setLoggedIn($loggedIn)
-    {
-        $this->loggedIn = $loggedIn;
-    }
-    public function getRatingCount()
-    {
-        return $this->ratingCount;
-    }
-    public function setRatingCount($ratingCount)
-    {
-        $this->ratingCount = $ratingCount;
-    }
+
 }

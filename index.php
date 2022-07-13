@@ -2,9 +2,7 @@
 
 require_once './includes/ini.inc.php';
 
-$blog = new PostManagement();
-$rating = new RatingManagement(new RatingRepository(new DBConnector()));
-
+$showPosts = './includes/showPosts.inc.php';
 
 ?>
 
@@ -46,43 +44,13 @@ $rating = new RatingManagement(new RatingRepository(new DBConnector()));
     <div id="main">
         <h1>Blog</h1>
         <?php
-
-        $blogs = $blog->getBlogs();
-        foreach ($blogs as $post) { ?>
-            <div id="blog">
-
-                <h2><?php echo $post->getSubject() ?></h2>
-
-                <p><?php echo $post->getText() ?></p>
-
-                <p>Created: <?php echo $post->getCreated() ?></p>
-
-                <p><?php $rating->Stars($post->getBnum());
-                    echo ' Ratings: ' . $rating->getRatingCount($post->getBnum()); ?></p>
-
-                <?php $comment = new CommentManagement(new CommentRepository(new DBConnector()));
-                $comments = $comment->getComments($post->getBnum()); ?>
-                <div id='comments'>
-                    <p>Comments:</p>
-                    <?php foreach ($comments as $comment) {
-                        if ($comment->getBlogNum() == $post->getBnum()) { ?>
-                            <p id='singleComment'><?php echo $comment->getText() ?> <br />
-                                Created: <?php echo $comment->getCreated() ?> <br />
-                                From :<?php echo $comment->getUser() ?> </p>
-                        <?php }
-                    }
-                    if ($loggedIn == true) { ?>
-                        <a href="addComment.php?bnum=<?php echo $post->getBnum() ?>">Add Comment</a>
-                    <?php } ?>
-                </div>
-
-                <?php if ($admin == true) { ?>
-                    <a href="editBlog.php?bnum=<?php echo $post->getBnum() ?>">Edit</a>
-                    <a href="deleteBlog.php?bnum=<?php echo $post->getBnum() ?>">Delete</a>
-                    </p>
-                <?php } ?>
-            </div>
-        <?php } ?>
+        $blogs = $post->getBlogs();
+        foreach ($blogs as $post) { 
+            if ($post->getHidden() == false){
+                include $showPosts;
+            } else if($post->getHidden() == true && $admin == true){
+                include $showPosts;
+            }} ?>
     </div>
 </body>
 

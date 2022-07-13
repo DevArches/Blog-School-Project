@@ -6,12 +6,15 @@ require_once './includes/ini.inc.php';
 $subject = '';
 $text = '';
 $rating = '';
+$bnum = '';
+$hidden = '';
+
 
 if (isset($_POST['submit']) && $admin == true) {
     $subject = $_POST['subject'];
     $text = $_POST['text'];
-    $PostManagement = new PostManagement();
-    $PostManagement->newBlog($subject, $text);
+    $hidden = $_POST['hidden'];
+    $post->newBlog($hidden, $subject, $text);
     header('Location: index.php');
     exit;
 }
@@ -36,6 +39,11 @@ if (isset($_POST['submit']) && $admin == true) {
         <br /><br />
         <label for="text">Text:</label><br />
         <textarea id="text" name="text" rows="10" cols="50"><?= $text ?></textarea>
+        <br /><br />
+        <!-- input for hidden true or false with radio -->
+        <label for="hidden">Hidden:</label><br />
+        <input type="radio" id="hidden" name="hidden" value="0" checked />No<br />
+        <input type="radio" id="hidden" name="hidden" value="1" />Yes<br />
         <br /><br />
         <input type="submit" name="submit" value="Save" />
         <br /><br />

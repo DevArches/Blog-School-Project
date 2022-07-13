@@ -21,8 +21,10 @@ function myAutoLoader($class)
 }
 spl_autoload_register('myAutoLoader');
 
-
-$b = new PostManagement();
+$post = new PostManagement(new PostRepository(new DBConnector()));
+$rating = new RatingManagement(new RatingRepository(new DBConnector()));
+$comment = new CommentManagement(new CommentRepository(new DBConnector()));
+$b = new BlogManagement(new BlogRepository(new DBConnector()));
 $b->isLoggedIn();
 if (isset($_SESSION['username'])) {
     $b->isAdmin($_SESSION['username']);

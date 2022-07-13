@@ -27,4 +27,12 @@ class CommentRepository{
         return $result;
     }
 
+    public function deleteComment($cnum, $user){
+        $sql = 'DELETE FROM ' . self::TABLE . ' WHERE cnum = :cnum AND user = :user';
+        $this->stmt = $this->pdo->prepare($sql);
+        $this->stmt->bindParam(':cnum', $cnum);
+        $this->stmt->bindParam(':user', $user);
+        $this->stmt->execute();
+    }
+
 }

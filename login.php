@@ -3,10 +3,9 @@ require_once './includes/ini.inc.php';
 
 
 if (isset($_POST['login'])) {
-    $blog = new PostManagement();
     $username = $_POST['username'];
     $password = $_POST['password'];
-    $result = $blog->login($username, $password);
+    $result = $b->login($username, $password);
     if ($result) {
         $_SESSION['username'] = $username;
         header('Location: ./index.php');
@@ -24,7 +23,7 @@ if (isset($_POST['login'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel='stylesheet' href='https://cdn.jsdelivr.net/gh/kognise/water.css@latest/dist/dark.css'>
-    <title>Vorlage</title>
+    <title>Login</title>
 </head>
 
 <body>
@@ -36,4 +35,4 @@ if (isset($_POST['login'])) {
     <p>Not registered? Too bad. Ask Ryan to add you</p>
 </body>
 
-</html>
+</html> 
