@@ -19,3 +19,8 @@ Unregistered user can:
     View visible posts/comments/ratings
 
 
+Classes: 
+    Blog* login/logout etc
+    Posts* handels CRUD for posts. Only Admin access to CUD. Admin+User+Unregistered access to Read
+    Comment* handles CRUD for comments. Admin+User access. 
+    Rating* handles CRU for ratings. Admin+User access

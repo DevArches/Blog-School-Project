@@ -48,9 +48,14 @@ class RatingManagement
     }
 
     public function newRating($bnum, $newRating, $user)
-    {
+    {   
+        if (is_numeric($newRating) && $newRating >= 1 && $newRating <= 5) {
         $this->ratingRepository->newRating($bnum, $newRating, $user);
-    }
+        } else {
+            header ('Location: index.php#b' . $bnum);
+            exit;
+        }
+}
     
     public function checkUserRating($bnum, $user)
     {

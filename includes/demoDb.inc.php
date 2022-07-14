@@ -63,7 +63,7 @@ CREATE TABLE Ratings (
 	rnum INTEGER AUTO_INCREMENT,
 	bnum INTEGER,
 	user VARCHAR(50),
-	rating DECIMAL(8,1),
+	rating INTEGER,
 	PRIMARY KEY(rnum)
 );
 

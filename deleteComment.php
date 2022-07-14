@@ -6,6 +6,6 @@ if (isset($_GET['cnum'])) {
     $cnum = $_GET['cnum'];
     $user = $_SESSION['username'];
     $comment->deleteComment($cnum, $user);
-    header('Location: index.php');
+    header('Location: index.php#b' . $bnum);
     exit;
 }

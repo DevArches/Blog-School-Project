@@ -33,7 +33,7 @@ class RatingRepository
     }
 
     public function newRating($bnum, $newRating, $user)
-    {
+    {   
         if ($this->checkUserRating($bnum, $user) == false) {
             $sql = "INSERT INTO " . self::TABLE . " (bnum, user, rating) VALUES (:bnum, :user, :rating)";
             $stmt = $this->pdo->prepare($sql);
