@@ -4,11 +4,15 @@ class RatingRepository
     private const TABLE = 'Ratings';
 
     private $pdo = null;
+    protected $dBConnector = null;
+
+
 
     public function __construct($dBConnector)
     {
         $this->pdo = $dBConnector->dbConnect();
     }
+
     public function getAll()
     {
         $sql = "SELECT * FROM " . self::TABLE;
@@ -17,6 +21,7 @@ class RatingRepository
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
+
     public function getRatingAverage($bnum)
     {
         $sql = "SELECT AVG(rating) FROM " . self::TABLE . " WHERE bnum = :bnum";
@@ -26,6 +31,7 @@ class RatingRepository
         $result = $stmt->fetch(PDO::FETCH_NUM);
         return $result[0];
     }
+
     public function newRating($bnum, $newRating, $user)
     {
         if ($this->checkUserRating($bnum, $user) == false) {
@@ -44,6 +50,7 @@ class RatingRepository
             $stmt->execute();
         }
     }
+    
     public function checkUserRating($bnum, $user)
     {
         $sql = "SELECT * FROM " . self::TABLE . " WHERE bnum = :bnum AND user = :user";

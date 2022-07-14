@@ -20,6 +20,7 @@ $showPosts = './includes/showPosts.inc.php';
 </head>
 
 <body>
+    <!-- ------------------------login start------------------------- -->
     <?php if ($admin == true) { ?>
         <button>
             <a href="./includes/demoDb.inc.php">Reset Database</a>
@@ -34,6 +35,7 @@ $showPosts = './includes/showPosts.inc.php';
         <button>
             <a href="login.php">Login</a>
         </button>
+        <!-- ------------------------login end------------------------- -->
     <?php }
     if ($admin == true) { ?>
         <br /><br />
@@ -41,17 +43,20 @@ $showPosts = './includes/showPosts.inc.php';
             <a href="newBlog.php">Add Blog</a>
         </button>
     <?php } ?>
+    <!----------------------------main blog start (see showPosts.inc.php)-------------------------->
     <div id="main">
         <h1>Blog</h1>
         <?php
         $blogs = $post->getBlogs();
-        foreach ($blogs as $post) { 
-            if ($post->getHidden() == false){
+        foreach ($blogs as $post) {
+            if ($post->getHidden() == false) {
                 include $showPosts;
-            } else if($post->getHidden() == true && $admin == true){
+            } else if ($post->getHidden() == true && $admin == true) {
                 include $showPosts;
-            }} ?>
+            }
+        } ?>
     </div>
+    <!----------------------------main blog end-------------------------->
 </body>
 
 </html>

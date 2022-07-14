@@ -33,6 +33,9 @@ if (isset($_POST['login'])) {
         <input type="submit" name="login" value="Login">
     </form>
     <p>Not registered? Too bad. Ask Ryan to add you</p>
+    <button>
+        <a href="index.php">Back to Blog</a>
+    </button>
 </body>
 
 </html> 

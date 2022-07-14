@@ -1,8 +1,6 @@
 <?php
 
 require_once './includes/ini.inc.php';
-$comment = new CommentManagement(new CommentRepository(new DBConnector()));
-
 
 $bnum = '';
 $text = '';
@@ -18,12 +16,9 @@ if (isset($_POST['submit'])) {
     $text = $_POST['text'] ?? '';
     $user = $_POST['user'] ?? '';
     $comment->addComment($blogNum, $text, $user);
-    header ('Location: index.php');
+    header('Location: index.php');
     exit;
 }
-
-
-
 
 ?>
 <!DOCTYPE html>
@@ -46,6 +41,10 @@ if (isset($_POST['submit'])) {
         <textarea name="text" id="" cols="30" rows="10"></textarea>
         <input type="submit" name="submit" value="Add Comment">
     </form>
+    <br />
+    <button>
+        <a href="index.php">Back to Blog</a>
+    </button>
 </body>
 
 

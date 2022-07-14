@@ -7,11 +7,13 @@ class RatingManagement
     {
         $this->ratingRepository = $ratingRepository;
     }
+
     public function getRatings()
     {
         $ratings = $this->ratingRepository->getAll();
         return $ratings;
     }
+
     public function getRatingCount($bnum)
     {
         $ratings = $this->getRatings();
@@ -44,10 +46,12 @@ class RatingManagement
             }
         }
     }
+
     public function newRating($bnum, $newRating, $user)
     {
         $this->ratingRepository->newRating($bnum, $newRating, $user);
     }
+    
     public function checkUserRating($bnum, $user)
     {
         return $this->ratingRepository->checkUserRating($bnum, $user); 

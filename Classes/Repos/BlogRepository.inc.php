@@ -3,6 +3,7 @@ class BlogRepository{
     private const TABLE = 'Users';
     
     private $pdo = null;
+    protected $dBConnector = null;
 
     public function __construct($dBConnector)
     {
@@ -28,12 +29,14 @@ class BlogRepository{
             return false;
         }
     }
+
     public function logout()
     {
         unset($_SESSION['username']);
         header('Location: index.php');
         exit;
     }
+    
     public function isAdmin($user)
     {
         $sql = 'SELECT * FROM ' . self::TABLE . ' WHERE user = :user';

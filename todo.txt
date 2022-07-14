@@ -1,7 +1,14 @@
-Clean Getter/Setter
+Delete post move (post, comments, ratings) to "Deleted" table on database. 
+Add ability to restore deleted posts. 
 
+Move logout, delete, etc to includes
 
-objects from ini
-delete comment
+Create header/footer
 
-line 70
+When setting rating, redirect to post, not to top of page
+
+Max posts per page
+
+Change bnum to pnum and blogNum to postNum for better readability. 
+
+Comment management in showPosts.inc.php doesnt work?

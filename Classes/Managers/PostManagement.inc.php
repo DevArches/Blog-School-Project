@@ -27,6 +27,7 @@ class PostManagement extends Post
     {
         $this->postRepository->delete($bnum);
     }
+    
     public function setTime()
     {
         $this->time = time();
@@ -43,6 +44,7 @@ class PostManagement extends Post
     {
         $this->postRepository->editBLog($bnum, $subject, $text);
     }
+
     public function toggleHidden($bnum)
     {
         $blog = $this->postRepository->getBlog($bnum);

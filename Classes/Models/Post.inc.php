@@ -15,46 +15,55 @@ class Post
         $this->setCreated($created);
         $this->setHidden($hidden);
     }
+
     public function getBnum()
     {
         return $this->bnum;
     }
+    
     public function setBnum($bnum)
     {
-        $this->bnum = $bnum;
+        $this->bnum = (int)$bnum;
+
     }
+
     public function getSubject()
     {
         return $this->subject;
     }
+
     public function setSubject($subject)
     {
         $this->subject = ucwords(strtolower($subject));
     }
+
     public function getText()
-    {
+    {   
         return $this->text;
     }
+
     public function setText($text)
     {
-        $this->text = $text;
+        $this->text = nl2br($text);
     }
 
     public function getCreated()
     {
         return $this->created;
     }
+
     public function setCreated($created)
     {
         $this->created = date('l jS \of F Y h:i:sa', $created);
     }
+
     public function getHidden()
     {
         return $this->hidden;
     }
+
     public function setHidden($hidden)
     {
         $this->hidden = $hidden;
     }
-
 }

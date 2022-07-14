@@ -1,5 +1,5 @@
 <?php
-class DBConnector{
+final class DBConnector{
     public function dbConnect()
     {
         $dns = 'mysql:host=localhost;dbname=fa111;port=3306';
