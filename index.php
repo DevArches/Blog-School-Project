@@ -48,10 +48,10 @@ $showPosts = './includes/showPosts.inc.php';
         <h1>Blog</h1>
         <?php
         $blogs = $post->getBlogs();
-        foreach ($blogs as $post) {
-            if ($post->getHidden() == false) {
+        foreach ($blogs as $blog) {
+            if ($blog->getHidden() == false) {
                 include $showPosts;
-            } else if ($post->getHidden() == true && $admin == true) {
+            } else if ($blog->getHidden() == true && $admin == true) {
                 include $showPosts;
             }
         } ?>

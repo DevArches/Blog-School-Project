@@ -21,11 +21,13 @@ function myAutoLoader($class)
 }
 spl_autoload_register('myAutoLoader');
 
-$post = new PostManagement(new PostRepository(new DBConnector()));
-$rating = new RatingManagement(new RatingRepository(new DBConnector()));
-$comment = new CommentManagement(new CommentRepository(new DBConnector()));
-$b = new BlogManagement(new BlogRepository(new DBConnector()));
-$b->isLoggedIn();
+$db = new DBConnector();
+$post = new PostManagement(new PostRepository($db));
+$rating = new RatingManagement(new RatingRepository($db));
+$comment = new CommentManagement(new CommentRepository($db));
+$blogManagement = new BlogManagement(new BlogRepository($db));
+
+$blogManagement->isLoggedIn();
 if (isset($_SESSION['username'])) {
-    $b->isAdmin($_SESSION['username']);
+    $blogManagement->isAdmin($_SESSION['username']);
 };

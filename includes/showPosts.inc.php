@@ -1,18 +1,18 @@
 <div id="blog">
-    <div id="b<?php echo $post->getBnum()?>">
+    <div id="b<?php echo $blog->getBnum()?>">
         <!----------------------------main blog start-------------------------->
-        <h2><?php echo $post->getSubject() ?></h2>
-        <p><?php echo $post->getText() ?></p>
-        <p>Created: <?php echo $post->getCreated() ?></p>
-        <p><?php $rating->Stars($post->getBnum());
-            echo ' Ratings: ' . $rating->getRatingCount($post->getBnum()); ?></p>
+        <h2><?php echo $blog->getSubject() ?></h2>
+        <p><?php echo $blog->getText() ?></p>
+        <p>Created: <?php echo $blog->getCreated() ?></p>
+        <p><?php $rating->Stars($blog->getBnum());
+            echo ' Ratings: ' . $rating->getRatingCount($blog->getBnum()); ?></p>
         <!----------------------------comments start-------------------------->
         <?php $comment = new CommentManagement(new CommentRepository(new DBConnector()));
-        $comments = $comment->getComments($post->getBnum()); ?>
+        $comments = $comment->getComments($blog->getBnum()); ?>
         <div id='comments'>
             <p>Comments:</p>
             <?php foreach ($comments as $comment) {
-                if ($comment->getBlogNum() == $post->getBnum()) { ?>
+                if ($comment->getBlogNum() == $blog->getBnum()) { ?>
                     <p id='singleComment'><?php echo $comment->getText() ?> <br />
                         Created: <?php echo $comment->getCreated() ?> <br />
                         From :<?php echo $comment->getUser() ?>
@@ -26,16 +26,16 @@
                 <?php }
             }
             if ($loggedIn == true) { ?>
-                <a href="addComment.php?bnum=<?php echo $post->getBnum() ?>">Add Comment</a>
+                <a href="addComment.php?bnum=<?php echo $blog->getBnum() ?>">Add Comment</a>
             <?php } ?>
             <!----------------------------comments end-------------------------->
         </div>
         <!----------------------------admin only-------------------------->
         <?php if ($admin == true) { ?>
-            <a href="editBlog.php?bnum=<?php echo $post->getBnum() ?>">Edit</a>
-            <a href="deleteBlog.php?bnum=<?php echo $post->getBnum() ?>">Delete</a>
-            <a href="hide.php?bnum=<?php echo $post->getBnum() ?>">Hide/Show</a>
-            <p id='hidden'>Post is currently <?php if ($post->getHidden() == true) {
+            <a href="editBlog.php?bnum=<?php echo $blog->getBnum() ?>">Edit</a>
+            <a href="deleteBlog.php?bnum=<?php echo $blog->getBnum() ?>">Delete</a>
+            <a href="hide.php?bnum=<?php echo $blog->getBnum() ?>">Hide/Show</a>
+            <p id='hidden'>Post is currently <?php if ($blog->getHidden() == true) {
                                                     echo 'hidden';
                                                 } else {
                                                     echo 'visible';
