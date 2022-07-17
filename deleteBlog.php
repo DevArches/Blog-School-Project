@@ -6,7 +6,7 @@ require_once './includes/ini.inc.php';
 $res = '';
 $bnum = $_GET['bnum'];
 if ($admin == true) {
-    $post->deleteBlog($bnum);
+    $postManagement->deleteBlog($bnum);
     header('Location: index.php');
     exit;
 } else {

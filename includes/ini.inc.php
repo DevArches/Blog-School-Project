@@ -22,9 +22,9 @@ function myAutoLoader($class)
 spl_autoload_register('myAutoLoader');
 
 $db = new DBConnector();
-$post = new PostManagement(new PostRepository($db));
-$rating = new RatingManagement(new RatingRepository($db));
-$comment = new CommentManagement(new CommentRepository($db));
+$postManagement = new PostManagement(new PostRepository($db));
+$ratingManagement = new RatingManagement(new RatingRepository($db));
+$commentManagement = new CommentManagement(new CommentRepository($db));
 $blogManagement = new BlogManagement(new BlogRepository($db));
 
 $blogManagement->isLoggedIn();

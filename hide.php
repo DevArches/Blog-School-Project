@@ -5,7 +5,7 @@ require_once './includes/ini.inc.php';
 if (isset($_GET['bnum'])) {
     $bnum = $_GET['bnum'];
     if ($admin == true) {
-        $post->toggleHidden($bnum);
+        $postManagement->toggleHidden($bnum);
         header('Location: index.php');
         exit;
     } else {

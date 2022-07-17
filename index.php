@@ -47,7 +47,7 @@ $showPosts = './includes/showPosts.inc.php';
     <div id="main">
         <h1>Blog</h1>
         <?php
-        $blogs = $post->getBlogs();
+        $blogs = $postManagement->getBlogs();
         foreach ($blogs as $blog) {
             if ($blog->getHidden() == false) {
                 include $showPosts;

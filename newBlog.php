@@ -14,7 +14,7 @@ if (isset($_POST['submit']) && $admin == true) {
     $subject = $_POST['subject'];
     $text = $_POST['text'];
     $hidden = $_POST['hidden'];
-    $post->newBlog($hidden, $subject, $text);
+    $postManagement->newBlog($hidden, $subject, $text);
     header('Location: index.php');
     exit;
 }

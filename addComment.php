@@ -15,7 +15,7 @@ if (isset($_POST['submit'])) {
     $blogNum = $_POST['bnum'] ?? '';
     $text = $_POST['text'] ?? '';
     $user = $_POST['user'] ?? '';
-    $comment->addComment($blogNum, $text, $user);
+    $commentManagement->addComment($blogNum, $text, $user);
     header('Location: index.php#b' . $blogNum);
     exit;
 }

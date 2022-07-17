@@ -9,7 +9,7 @@ if($loggedIn == false) {
     $bnum = $_GET['bnum'] ?? '';
     $user = $_SESSION['username'] ?? '';
     if ($newRating >= 1 && $newRating <= 5 && $bnum >= 1) {
-    $rating->newRating($bnum, $newRating, $user);
+    $ratingManagement->newRating($bnum, $newRating, $user);
     header ('Location: index.php#b' . $bnum);
     }
     exit;

@@ -4,8 +4,8 @@
         <h2><?php echo $blog->getSubject() ?></h2>
         <p><?php echo $blog->getText() ?></p>
         <p>Created: <?php echo $blog->getCreated() ?></p>
-        <p><?php $rating->Stars($blog->getBnum());
-            echo ' Ratings: ' . $rating->getRatingCount($blog->getBnum()); ?></p>
+        <p><?php $ratingManagement->Stars($blog->getBnum());
+            echo ' Ratings: ' . $ratingManagement->getRatingCount($blog->getBnum()); ?></p>
         <!----------------------------comments start-------------------------->
         <?php $comment = new CommentManagement(new CommentRepository(new DBConnector()));
         $comments = $comment->getComments($blog->getBnum()); ?>
