@@ -7,8 +7,7 @@
         <p><?php $ratingManagement->Stars($blog->getBnum());
             echo ' Ratings: ' . $ratingManagement->getRatingCount($blog->getBnum()); ?></p>
         <!----------------------------comments start-------------------------->
-        <?php $comment = new CommentManagement(new CommentRepository(new DBConnector()));
-        $comments = $comment->getComments($blog->getBnum()); ?>
+        <?php $comments = $commentManagement->getComments($blog->getBnum()); ?>
         <div id='comments'>
             <p>Comments:</p>
             <?php foreach ($comments as $comment) {
