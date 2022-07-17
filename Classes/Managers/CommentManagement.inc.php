@@ -1,5 +1,5 @@
 <?php
-class CommentManagement extends Comment{
+class CommentManagement{
     private $commentRepository;
 
     public function __construct($commentRepository){

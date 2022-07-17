@@ -5,8 +5,6 @@ Move logout, delete, etc to includes
 
 Create header/footer
 
-When setting rating, redirect to post, not to top of page
-
 Max posts per page
 
 Change bnum to pnum and blogNum to postNum for better readability. 

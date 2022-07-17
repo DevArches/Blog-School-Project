@@ -1,5 +1,5 @@
 <?php
-class PostManagement extends Post
+class PostManagement
 {
     private $postRepository;
 

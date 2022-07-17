@@ -12,8 +12,8 @@ if (isset($_GET['bnum'])) {
     $bnum = $_GET['bnum'] ?? '';
     if (is_numeric($bnum)) {
         $blog = $post->getBlog($bnum);
-        $subject = $post->getSubject();
-        $text = $post->getText();
+        $subject = $blog->getSubject();
+        $text = $blog->getText();
     }
 }
 
