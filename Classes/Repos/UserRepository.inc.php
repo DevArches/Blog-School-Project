@@ -1,5 +1,5 @@
 <?php
-class BlogRepository{
+class UserRepository{
     private const TABLE = 'Users';
     
     private $pdo = null;

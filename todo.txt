@@ -9,4 +9,4 @@ Max posts per page
 
 Change bnum to pnum and blogNum to postNum for better readability. 
 
-Comment management in showPosts.inc.php doesnt work?
+

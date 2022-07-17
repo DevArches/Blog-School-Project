@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 
 require_once 'PDOConnect.inc.php';
@@ -25,9 +24,9 @@ $db = new DBConnector();
 $postManagement = new PostManagement(new PostRepository($db));
 $ratingManagement = new RatingManagement(new RatingRepository($db));
 $commentManagement = new CommentManagement(new CommentRepository($db));
-$blogManagement = new BlogManagement(new BlogRepository($db));
+$userManagement = new UserManagement(new UserRepository($db));
 
-$blogManagement->isLoggedIn();
+$userManagement->isLoggedIn();
 if (isset($_SESSION['username'])) {
-    $blogManagement->isAdmin($_SESSION['username']);
+    $userManagement->isAdmin($_SESSION['username']);
 };

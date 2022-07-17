@@ -5,7 +5,7 @@ require_once './includes/ini.inc.php';
 if (isset($_POST['login'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
-    $result = $blogManagement->login($username, $password);
+    $result = $userManagement->login($username, $password);
     if ($result) {
         $_SESSION['username'] = $username;
         header('Location: ./index.php');

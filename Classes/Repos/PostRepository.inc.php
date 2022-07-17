@@ -2,8 +2,8 @@
 class PostRepository{
     private const TABLE = 'Blogs';
     
-    private $pdo = null;
-    protected $dBConnector = null;
+    private $pdo;
+
 
     public function __construct($dBConnector) 
     {

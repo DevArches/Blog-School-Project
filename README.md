@@ -1,5 +1,3 @@
-Blog class assignment with database written in PHP and focusing on classes
-
 includes/demoDb.inc.php -> to create/reset database (it will drop fa111 database if exists! careful!)
 
 Admin can: 
@@ -20,7 +18,7 @@ Unregistered user can:
 
 
 Classes: 
-    Blog* login/logout etc
-    Posts* handels CRUD for posts. Only Admin access to CUD. Admin+User+Unregistered access to Read
+    UserManagement* login/logout etc
+    Posts* handles CRUD for posts. Only Admin access to CUD. Admin+User+Unregistered access to Read
     Comment* handles CRUD for comments. Admin+User access. 
     Rating* handles CRU for ratings. Admin+User access

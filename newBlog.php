@@ -1,14 +1,11 @@
 <?php
-
 require_once './includes/ini.inc.php';
-
 
 $subject = '';
 $text = '';
 $rating = '';
 $bnum = '';
 $hidden = '';
-
 
 if (isset($_POST['submit']) && $admin == true) {
     $subject = $_POST['subject'];
