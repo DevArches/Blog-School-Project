@@ -2,8 +2,8 @@
 class CommentRepository{
     private const TABLE = "Comments";
 
-    private $pdo = null;
-    protected $dBConnector = null;
+    private $pdo;
+
 
     public function __construct($dBConnector)
     {

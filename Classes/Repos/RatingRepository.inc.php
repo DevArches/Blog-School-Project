@@ -3,10 +3,7 @@ class RatingRepository
 {
     private const TABLE = 'Ratings';
 
-    private $pdo = null;
-    protected $dBConnector = null;
-
-
+    private $pdo;
 
     public function __construct($dBConnector)
     {
