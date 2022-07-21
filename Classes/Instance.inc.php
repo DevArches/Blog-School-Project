@@ -16,7 +16,6 @@ class Instance {
         if (is_null(self::$instance)) {
             try {
                 self::$instance = new PDO($dns, $user, $pwd, $opt);
-                echo "Connected to database";
             } catch (PDOException $e) {
                 echo 'Connection Error: ' . $e->getMessage();
                 exit;
